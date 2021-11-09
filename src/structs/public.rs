@@ -1,5 +1,6 @@
 use super::DateTime;
 use crate::utils::f64_from_string;
+use chrono::{NaiveDateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -9,6 +10,17 @@ use uuid::Uuid;
 pub struct Time {
     pub iso: String,
     pub epoch: f64,
+}
+
+impl From<Time> for DateTime {
+    fn from(time: Time) -> Self {
+        const NANOSECONDS_PER_SECOND: f64 = 1_000_000_000.0;
+        DateTime::from_utc(
+            NaiveDateTime::from_timestamp(
+                time.epoch as i64,
+                ((time.epoch - time.epoch.floor()) * NANOSECONDS_PER_SECOND) as u32),
+            Utc)
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
