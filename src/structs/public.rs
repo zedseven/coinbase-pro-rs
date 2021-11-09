@@ -5,13 +5,13 @@ use uuid::Uuid;
 
 // Public
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Time {
     pub iso: String,
     pub epoch: f64,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Currency {
     pub id: String,
     pub name: String,
@@ -19,7 +19,7 @@ pub struct Currency {
     pub min_size: f64,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Product {
     pub id: String,
     pub display_name: String,
@@ -45,7 +45,7 @@ pub struct Product {
     pub trading_disabled: bool,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Book<T> {
     pub sequence: usize,
     pub bids: Vec<T>,
@@ -56,7 +56,7 @@ pub trait BookLevel {
     fn level() -> u8;
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BookRecordL1 {
     #[serde(deserialize_with = "f64_from_string")]
     pub price: f64,
@@ -71,7 +71,7 @@ impl BookLevel for BookRecordL1 {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BookRecordL2 {
     #[serde(deserialize_with = "f64_from_string")]
     pub price: f64,
@@ -86,7 +86,7 @@ impl BookLevel for BookRecordL2 {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BookRecordL3 {
     #[serde(deserialize_with = "f64_from_string")]
     pub price: f64,
@@ -101,7 +101,7 @@ impl BookLevel for BookRecordL3 {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Ticker {
     pub trade_id: usize,
     #[serde(deserialize_with = "f64_from_string")]
@@ -117,7 +117,7 @@ pub struct Ticker {
     pub time: DateTime,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Trade {
     pub time: DateTime,
     pub trade_id: usize,
@@ -128,7 +128,7 @@ pub struct Trade {
     pub side: super::reqs::OrderSide,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Candle(
     pub usize, // time
     pub f64,   // low
@@ -138,7 +138,7 @@ pub struct Candle(
     pub f64,   // volume
 );
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Stats24H {
     #[serde(deserialize_with = "f64_from_string")]
     pub open: f64,

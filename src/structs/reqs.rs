@@ -3,7 +3,7 @@ use uuid::Uuid;
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Order<'a> {
     side: OrderSide,
     client_oid: Option<Uuid>,
@@ -21,7 +21,7 @@ pub enum OrderSide {
     Sell,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(tag = "type")]
 #[serde(rename_all = "camelCase")]
 pub enum OrderType {
@@ -187,7 +187,7 @@ pub enum OrderTimeInForceCancelAfter {
     Day,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct OrderStop {
     stop_price: f64,
     #[serde(rename = "stop")]

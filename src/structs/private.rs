@@ -7,7 +7,7 @@ use uuid::Uuid;
 
 // Private
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Account {
     pub id: Uuid,
     pub currency: String,
@@ -20,7 +20,7 @@ pub struct Account {
     pub profile_id: Uuid,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AccountHistory {
     #[serde(deserialize_with = "usize_from_string")]
     pub id: usize,
@@ -102,7 +102,7 @@ impl<'a> From<&'a AccountHistoryDetails> for AccountHistoryType {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AccountHolds {
     pub id: Uuid,
     pub account_id: Uuid,
@@ -126,7 +126,7 @@ pub enum AccountHoldsType {
 // market:{"id":"ea565dc3-1656-49d7-bcdb-d99981ce35a7","size":"0.00100000","product_id":"BTC-USD","side":"buy","stp":"dc","funds":"28.2449436100000000","type":"market","post_only":false,"created_at":"2018-08-23T18:43:18.964413Z","fill_fees":"0.0000000000000000","filled_size":"0.00000000","executed_value":"0.0000000000000000","status":"pending","settled":false}
 // call:[{"id":"063da13d-6aba-45e1-91ca-89f8514da989","price":"100000.00000000","size":"0.00100000","product_id":"BTC-USD","side":"sell","type":"limit","time_in_force":"GTC","post_only":true,"created_at":"2018-08-24T04:50:01.139098Z","fill_fees":"0.0000000000000000","filled_size":"0.00000000","executed_value":"0.0000000000000000","status":"open","settled":false}]
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Order {
     pub id: Uuid,
     pub product_id: String,
@@ -156,7 +156,7 @@ pub struct Order {
     pub stop: Option<OrderStop>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 #[serde(tag = "type")]
 pub enum OrderType {
@@ -215,7 +215,7 @@ impl fmt::Display for OrderStatus {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Fill {
     pub trade_id: usize,
     pub product_id: String,
@@ -232,14 +232,14 @@ pub struct Fill {
     pub side: super::reqs::OrderSide,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum FillLiquidity {
     M,
     T,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TrailingVolume {
     pub product_id: String,
     #[serde(deserialize_with = "f64_from_string")]
@@ -249,7 +249,7 @@ pub struct TrailingVolume {
     pub recorded_at: DateTime,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Fees {
     #[serde(deserialize_with = "f64_from_string")]
     pub maker_fee_rate: f64,
@@ -259,7 +259,7 @@ pub struct Fees {
     pub usd_volume: f64,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Transfer {
     pub id: Uuid,
     #[serde(rename = "type")]
@@ -284,7 +284,7 @@ pub struct Transfer {
     pub details: TransferDetails
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TransferDetails {
     #[serde(default)]
     pub destination_tag: Option<String>,
@@ -314,7 +314,7 @@ pub struct TransferDetails {
     pub crypto_transaction_id: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 #[serde(rename_all = "snake_case")]
 pub enum TransferType {
     Deposit,
